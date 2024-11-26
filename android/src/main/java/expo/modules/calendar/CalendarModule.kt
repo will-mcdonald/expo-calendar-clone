@@ -226,11 +226,9 @@ class CalendarModule : Module() {
   }
 
   private fun findEvents(startDate: Any, endDate: Any, calendars: List<String>): List<Bundle> {
+    Log.d("CAL FIND EVENT", "USING GWE")
     val eStartDate = Calendar.getInstance()
     val eEndDate = Calendar.getInstance()
-
-    Log.d("CAL DEUBG", "Using great.work.everyone")
-    
     try {
       setDateInCalendar(eStartDate, startDate)
       setDateInCalendar(eEndDate, endDate)
@@ -268,7 +266,6 @@ class CalendarModule : Module() {
     )
 
     requireNotNull(cursor) { "Cursor shouldn't be null" }
-
     return cursor.use(::serializeEvents)
   }
 
@@ -678,9 +675,7 @@ class CalendarModule : Module() {
       foundEndDate.timeInMillis = endDate.toLong()
       endDateUTC = sdf.format(foundEndDate.time)
     }
-
-    val rrule = optStringFromCursor(cursor, CalendarContract.Events.RRULE)
-
+    // val rrule = optStringFromCursor(cursor, CalendarContract.Events.RRULE)
     // val rruleBundle = if (rrule != null) {
     //   val recurrenceRule = Bundle()
     //   val recurrenceRules = rrule.split(";").toTypedArray()
@@ -709,7 +704,6 @@ class CalendarModule : Module() {
     // } else {
     //   null
     // }
-
 
     // may be CalendarContract.Instances.EVENT_ID or CalendarContract.Events._ID (which have different string values)
     val event = Bundle().apply {
